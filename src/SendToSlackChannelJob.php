@@ -29,7 +29,7 @@ class SendToSlackChannelJob implements ShouldQueue
 
         try {
             Http::post($url, [
-                ['body' => json_encode($payload)]
+                ['body' => json_encode($payload)],
             ]);
         } catch (Exception $e) {
             report($e);
