@@ -5,7 +5,17 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-slack-logger/Check%20&%20fix%20styling?label=code%20style)](https://github.com/spatie/laravel-slack-logger/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-slack-logger.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-logger)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Using this package you can send messages to a Slack channel with Laravel Jobs.
+
+When Slack is down, and exception will be thrown. This will be solved when using Jobs.
+
+Here's an example where we'll send a message to a Slack channel.
+
+```php
+use  Spatie\SlackLogger\SlackLogger;
+
+SlackLogger::display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+```
 
 ## Support us
 
