@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Spatie\SlackLogger\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class SlackLoggerCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-slack-logger';
 
     public $description = 'My command';
 
