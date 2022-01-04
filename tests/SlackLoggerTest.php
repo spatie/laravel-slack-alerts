@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Bus;
-use Spatie\SlackLogger\SendToSlackChannelJob;
+use Spatie\SlackLogger\Jobs\SendToSlackChannelJob;
 use Spatie\SlackLogger\SlackLogger;
 
 it('can dispatch a job', function () {

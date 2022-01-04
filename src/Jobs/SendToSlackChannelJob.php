@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\SlackLogger;
+namespace Spatie\SlackLogger\Jobs;
 
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use function report;
 
 class SendToSlackChannelJob implements ShouldQueue
 {
