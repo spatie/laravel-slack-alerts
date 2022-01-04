@@ -11,7 +11,7 @@ class SlackLogger
     {
         $url = config('slack-logger.webhook_url');
 
-        if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new InvalidUrl();
         }
 
