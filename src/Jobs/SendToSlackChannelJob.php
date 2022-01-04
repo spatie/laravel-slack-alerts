@@ -18,7 +18,7 @@ class SendToSlackChannelJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public function __construct(public string $text)
+    public function __construct(public string $text, public string $url)
     {
     }
 
@@ -26,10 +26,8 @@ class SendToSlackChannelJob implements ShouldQueue
     {
         $payload = ['text' => $this->text];
 
-        $url = '';
-
         try {
-            Http::post($url, [
+            Http::post($this->url, [
                 ['body' => json_encode($payload)],
             ]);
         } catch (Exception $e) {
