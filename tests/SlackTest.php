@@ -9,16 +9,25 @@ beforeEach(function() {
     Bus::fake();
 });
 
-it('can dispatch a job', function () {
-    config()->set('slack-logger.webhook_url', 'https://test-domain.com');
+it('can dispatch a job to send a message to slack using the default webhook url', function () {
+    config()->set('slack-logger.webhook_urls.default', 'https://test-domain.com');
 
     Slack::display('test-data');
 
     Bus::assertDispatched(SendToSlackChannelJob::class);
 });
 
+it('can dispatch a job to send a message to slack using an alternative webhook url', function () {
+    config()->set('slack-logger.webhook_urls.marketing', 'https://test-domain.com');
+
+    Slack::in('marketing')->display('test-data');
+
+    Bus::assertDispatched(SendToSlackChannelJob::class);
+});
+
+
 it('cannot dispatch a job with an invalid webhook url', function () {
-    config()->set('slack-logger.webhook_url', '');
+    config()->set('slack-logger.webhook_urls.default', '');
 
     $this->expectException(InvalidUrl::class);
 

@@ -32,7 +32,7 @@ You can install the package via composer:
 composer require spatie/laravel-slack-logger
 ```
 
-You can publish the config file with:
+You must publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="slack-logger-config"
@@ -43,9 +43,11 @@ This is the contents of the published config file:
 ```php
 return [
     /*
-     * The webhook URL that we'll use to send a message to Slack.
+     * The webhook URLs that we'll use to send a message to Slack.
      */
-    'webhook_url' => '',
+    'webhook_urls' => [
+        'default' => '',
+    ],
 
     /*
      * This job will send the message to Slack. You can extend this
@@ -55,11 +57,33 @@ return [
 ];
 ```
 
+In the `webhooks_urls.default` key, you must specify a Slack webhook URL. You can learn how to get a webhook URL [here](TODO: add link).
+
 ## Usage
 
+To send a message to Slack, simply call `Slack::display()` and pass it any message you want.
+
 ```php
-$laravel-slack-logger = new Spatie\SlackLogger();
-echo $laravel-slack-logger->echoPhrase('Hello, Spatie!');
+Slack::display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+```
+
+## Using multiple webhooks
+
+You can also use an alternative webhook, by specify extra ones in the config file.
+
+```php
+// in config/slack-logger.php
+
+'webhook_urls' => [
+    'default' => 'https://hooks.slack.com/services/XXXXXX',
+    'marketing' => 'https://hooks.slack.com/services/YYYYYY',
+],
+```
+
+The webhook to be used can be chosen using the `in` function.
+
+```php
+Slack::in('marketing')->display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
 ```
 
 ## Testing
