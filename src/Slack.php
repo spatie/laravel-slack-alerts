@@ -6,7 +6,7 @@ use Spatie\SlackLogger\Exceptions\InvalidUrl;
 
 class Slack
 {
-    public static function display(string $text): void
+    public function display(string $text): void
     {
         $webhookUrl = config('slack-logger.webhook_url');
 
