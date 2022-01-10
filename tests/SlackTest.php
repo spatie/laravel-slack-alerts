@@ -5,7 +5,7 @@ use Spatie\SlackLogger\Exceptions\InvalidUrl;
 use Spatie\SlackLogger\Facades\Slack;
 use Spatie\SlackLogger\Jobs\SendToSlackChannelJob;
 
-beforeEach(function() {
+beforeEach(function () {
     Bus::fake();
 });
 
