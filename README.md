@@ -33,29 +33,26 @@ You can install the package via composer:
 composer require spatie/laravel-slack-logger
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-slack-logger-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-slack-logger-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-slack-logger-views"
+php artisan vendor:publish --tag="slack-logger-config"
 ```
 
 This is the contents of the published config file:
 
 ```php
 return [
+    /*
+     * The webhook URL that we'll use to send a message to Slack.
+     */
+    'webhook_url' => '',
+
+    /*
+     * This job will send the message to Slack. You can extend this
+     * job to set timeouts, retries, etc...
+     */
+    'job' => Spatie\SlackLogger\Jobs\SendToSlackChannelJob::class,
 ];
 ```
 

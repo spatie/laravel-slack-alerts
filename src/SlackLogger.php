@@ -3,7 +3,6 @@
 namespace Spatie\SlackLogger;
 
 use Spatie\SlackLogger\Exceptions\InvalidUrl;
-use Spatie\SlackLogger\Jobs\SendToSlackChannelJob;
 
 class SlackLogger
 {
