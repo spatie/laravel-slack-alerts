@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Bus;
-use Spatie\SlackLogger\Exceptions\InvalidClass;
+use Spatie\SlackLogger\Exceptions\JobClassDoesNotExist;
 use Spatie\SlackLogger\Exceptions\InvalidUrl;
+use Spatie\SlackLogger\Exceptions\WebhookUrlNotValid;
 use Spatie\SlackLogger\Facades\Slack;
 use Spatie\SlackLogger\Jobs\SendToSlackChannelJob;
 
@@ -26,23 +27,23 @@ it('can dispatch a job to send a message to slack using an alternative webhook u
     Bus::assertDispatched(SendToSlackChannelJob::class);
 });
 
-it('cannot dispatch a job with an invalid webhook url', function () {
-    config()->set('slack-logger.webhook_urls.default', '');
-
-    $this->expectException(InvalidUrl::class);
+it('will throw an exception for a non existing job class', function () {
+    config()->set('slack-logger.webhook_urls.default', 'https://test-domain.com');
+    config()->set('slack-logger.job', 'non-existing-job');
 
     Slack::display('test-data');
+})->throws(JobClassDoesNotExist::class);
 
-    Bus::assertNothingDispatched();
-});
 
-it('cannot dispatch a job with an invalid job class', function () {
+it('will throw an exception for an invalid webhook url', function () {
+    config()->set('slack-logger.webhook_urls.default', '');
+
+    Slack::display('test-data');
+})->throws(WebhookUrlNotValid::class);
+
+it('will throw an exception for an invalid job class', function () {
     config()->set('slack-logger.webhook_urls.default', 'https://test-domain.com');
     config()->set('slack-logger.job', '');
 
-    $this->expectException(InvalidClass::class);
-
     Slack::display('test-data');
-
-    Bus::assertNothingDispatched();
-});
+})->throws(JobClassDoesNotExist::class);
