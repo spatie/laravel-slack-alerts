@@ -57,7 +57,7 @@ return [
 ];
 ```
 
-In the `webhooks_urls.default` key, you must specify a Slack webhook URL. You can learn how to get a webhook URL [here](TODO: add link).
+In the `webhooks_urls.default` key, you must specify a Slack webhook URL. You can learn how to get a webhook URL [in the Slack API docs](https://api.slack.com/messaging/webhooks).
 
 ## Usage
 
