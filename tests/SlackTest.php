@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Bus;
 use Spatie\SlackLogger\Exceptions\JobClassDoesNotExist;
-use Spatie\SlackLogger\Exceptions\InvalidUrl;
 use Spatie\SlackLogger\Exceptions\WebhookUrlNotValid;
 use Spatie\SlackLogger\Facades\Slack;
 use Spatie\SlackLogger\Jobs\SendToSlackChannelJob;
