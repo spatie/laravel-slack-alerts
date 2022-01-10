@@ -2,6 +2,7 @@
 
 namespace Spatie\SlackLogger;
 
+use Spatie\SlackLogger\Exceptions\InvalidClass;
 use Spatie\SlackLogger\Exceptions\InvalidUrl;
 
 class Slack
@@ -19,15 +20,28 @@ class Slack
     {
         $webhookUrl = config("slack-logger.webhook_urls.{$this->webhookUrlName}");
 
-        if (filter_var($webhookUrl, FILTER_VALIDATE_URL) === false) {
-            throw new InvalidUrl();
-        }
+        $this->ensureUrlIsValid($webhookUrl);
+        $this->ensureClassExists($job = config('slack-logger.job'));
 
-        $jobClass = app(config('slack-logger.job'), [
+        $jobClass = app($job, [
             'text' => $text,
             'webhookUrl' => $webhookUrl,
         ]);
 
         dispatch($jobClass);
+    }
+
+    private function ensureUrlIsValid(string $url): void
+    {
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+            throw new InvalidUrl();
+        }
+    }
+
+    private function ensureClassExists(string $class): void
+    {
+        if (! class_exists($class)) {
+            InvalidClass::fromClass($class);
+        }
     }
 }
