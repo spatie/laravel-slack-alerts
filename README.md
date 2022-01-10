@@ -1,24 +1,24 @@
 # Quickly send a message to Slack
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-slack-logger.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-logger)
-[![run-tests](https://github.com/spatie/laravel-slack-logger/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-slack-logger/actions/workflows/run-tests.yml)
-[![PHPStan](https://github.com/spatie/laravel-slack-logger/actions/workflows/phpstan.yml/badge.svg)](https://github.com/spatie/laravel-slack-logger/actions/workflows/phpstan.yml)
-[![Check & fix styling](https://github.com/spatie/laravel-slack-logger/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/spatie/laravel-slack-logger/actions/workflows/php-cs-fixer.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-slack-logger.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-logger)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-slack-alerts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-alerts)
+[![run-tests](https://github.com/spatie/laravel-slack-alerts/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-slack-alerts/actions/workflows/run-tests.yml)
+[![PHPStan](https://github.com/spatie/laravel-slack-alerts/actions/workflows/phpstan.yml/badge.svg)](https://github.com/spatie/laravel-slack-alerts/actions/workflows/phpstan.yml)
+[![Check & fix styling](https://github.com/spatie/laravel-slack-alerts/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/spatie/laravel-slack-alerts/actions/workflows/php-cs-fixer.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-slack-alerts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-alerts)
 
 This package can quickly send a message to Slack. You can use this to notify yourself of any noteworthy events happening in your app.
 
 ```php
-use Spatie\SlackLogger\Facades\Slack;
+use Spatie\SlackAlerts\Facades\SlackAlert;
 
-Slack::display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+SlackAlert::message("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
 ```
 
 Under the hood, a job is used to communicate with Slack. This prevents your app from failing in case Slack is down.
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-slack-logger.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-slack-logger)
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-slack-alerts.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-slack-alerts)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
@@ -29,13 +29,13 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 You can install the package via composer:
 
 ```bash
-composer require spatie/laravel-slack-logger
+composer require spatie/laravel-slack-alerts
 ```
 
 You must publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="slack-logger-config"
+php artisan vendor:publish --tag="slack-alerts-config"
 ```
 
 This is the contents of the published config file:
@@ -53,7 +53,7 @@ return [
      * This job will send the message to Slack. You can extend this
      * job to set timeouts, retries, etc...
      */
-    'job' => Spatie\SlackLogger\Jobs\SendToSlackChannelJob::class,
+    'job' => Spatie\SlackAlerts\Jobs\SendToSlackChannelJob::class,
 ];
 ```
 
@@ -61,10 +61,10 @@ In the `webhooks_urls.default` key, you must specify a Slack webhook URL. You ca
 
 ## Usage
 
-To send a message to Slack, simply call `Slack::display()` and pass it any message you want.
+To send a message to Slack, simply call `Slack::message()` and pass it any message you want.
 
 ```php
-Slack::display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+SlackAlert::message("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
 ```
 
 ## Using multiple webhooks
@@ -72,7 +72,7 @@ Slack::display("{$user->email} has subscribed to the {$newsletter->name} newslet
 You can also use an alternative webhook, by specify extra ones in the config file.
 
 ```php
-// in config/slack-logger.php
+// in config/slack-alerts.php
 
 'webhook_urls' => [
     'default' => 'https://hooks.slack.com/services/XXXXXX',
@@ -83,9 +83,9 @@ You can also use an alternative webhook, by specify extra ones in the config fil
 The webhook to be used can be chosen using the `in` function.
 
 ```php
-use Spatie\SlackLogger\Facades\Slack;
+use Spatie\SlackAlerts\Facades\SlackAlert;
 
-Slack::in('marketing')->display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+SlackAlert::in('marketing')->message("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
 ```
 
 ## Testing
@@ -109,6 +109,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [Niels Vanpachtenbeke](https://github.com/Nielsvanpach)
+- [Freek Van der Herten](https://github.com/freekmurze)
+
 - [All Contributors](../../contributors)
 
 ## License

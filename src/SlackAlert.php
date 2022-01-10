@@ -1,19 +1,19 @@
 <?php
 
-namespace Spatie\SlackLogger;
+namespace Spatie\SlackAlerts;
 
-class Slack
+class SlackAlert
 {
     protected string $webhookUrlName = 'default';
 
-    public function in(string $webhookUrlName): self
+    public function to(string $webhookUrlName): self
     {
         $this->webhookUrlName = $webhookUrlName;
 
         return $this;
     }
 
-    public function display(string $text): void
+    public function message(string $text): void
     {
         $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
 

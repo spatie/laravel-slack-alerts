@@ -12,5 +12,5 @@ return [
      * This job will send the message to Slack. You can extend this
      * job to set timeouts, retries, etc...
      */
-    'job' => Spatie\SlackLogger\Jobs\SendToSlackChannelJob::class,
+    'job' => Spatie\SlackAlerts\Jobs\SendToSlackChannelJob::class,
 ];

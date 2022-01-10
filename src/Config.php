@@ -1,17 +1,17 @@
 <?php
 
-namespace Spatie\SlackLogger;
+namespace Spatie\SlackAlerts;
 
-use Spatie\SlackLogger\Exceptions\JobClassDoesNotExist;
-use Spatie\SlackLogger\Exceptions\WebhookDoesNotExist;
-use Spatie\SlackLogger\Exceptions\WebhookUrlNotValid;
-use Spatie\SlackLogger\Jobs\SendToSlackChannelJob;
+use Spatie\SlackAlerts\Exceptions\JobClassDoesNotExist;
+use Spatie\SlackAlerts\Exceptions\WebhookDoesNotExist;
+use Spatie\SlackAlerts\Exceptions\WebhookUrlNotValid;
+use Spatie\SlackAlerts\Jobs\SendToSlackChannelJob;
 
 class Config
 {
     public static function getJob(array $arguments): SendToSlackChannelJob
     {
-        $jobClass = config('slack-logger.job');
+        $jobClass = config('slack-alerts.job');
 
         if (! class_exists($jobClass)) {
             throw JobClassDoesNotExist::make($jobClass);
@@ -22,7 +22,7 @@ class Config
 
     public static function getWebhookUrl(string $name): string
     {
-        $url = config("slack-logger.webhook_urls.{$name}");
+        $url = config("slack-alerts.webhook_urls.{$name}");
 
         if (is_null($url)) {
             throw WebhookDoesNotExist::make($name);

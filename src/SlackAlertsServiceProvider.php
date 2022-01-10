@@ -1,23 +1,23 @@
 <?php
 
-namespace Spatie\SlackLogger;
+namespace Spatie\SlackAlerts;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class SlackLoggerServiceProvider extends PackageServiceProvider
+class SlackAlertsServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('laravel-slack-logger')
+            ->name('laravel-slack-alerts')
             ->hasConfigFile();
     }
 
     public function packageRegistered(): void
     {
-        $this->app->bind('laravel-slack-logger', function () {
-            return new Slack();
+        $this->app->bind('laravel-slack-alerts', function () {
+            return new SlackAlert();
         });
     }
 }

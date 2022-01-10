@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `laravel-slack-logger` will be documented in this file.
+All notable changes to `laravel-slack-alerts` will be documented in this file.
 
 ## 0.0.1 - 2022-01-10
 

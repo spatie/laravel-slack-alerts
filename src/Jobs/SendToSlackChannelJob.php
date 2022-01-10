@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\SlackLogger\Jobs;
+namespace Spatie\SlackAlerts\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
