@@ -30,6 +30,4 @@ class Slack
 
         dispatch($jobClass);
     }
-
-    // ideas: to a specific queue or connection, dispatch after response, specify $tries, handle failures
 }
