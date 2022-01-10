@@ -1,4 +1,4 @@
-# Log to Slack using Jobs
+# Quickly send a message to Slack
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-slack-logger.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-logger)
 [![run-tests](https://github.com/spatie/laravel-slack-logger/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/laravel-slack-logger/actions/workflows/run-tests.yml)
