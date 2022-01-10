@@ -21,7 +21,8 @@ class SendToSlackChannelJob implements ShouldQueue
     public function __construct(
         public string $text,
         public string $webhookUrl
-    ) {}
+    ) {
+    }
 
     public function handle(): void
     {
