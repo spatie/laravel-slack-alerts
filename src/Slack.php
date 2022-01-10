@@ -4,7 +4,7 @@ namespace Spatie\SlackLogger;
 
 use Spatie\SlackLogger\Exceptions\InvalidUrl;
 
-class SlackLogger
+class Slack
 {
     public static function display(string $text): void
     {

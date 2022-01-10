@@ -5,9 +5,9 @@ namespace Spatie\SlackLogger\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Spatie\SlackLogger\SlackLogger
+ * @see \Spatie\SlackLogger\Slack
  */
-class SlackLogger extends Facade
+class Slack extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

@@ -61,7 +61,7 @@
                 "Spatie\\SlackLogger\\SlackLoggerServiceProvider"
             ],
             "aliases": {
-                "SlackLogger": "Spatie\\SlackLogger\\Facades\\SlackLogger"
+                "Slack": "Spatie\\SlackLogger\\Facades\\Slack"
             }
         }
     },

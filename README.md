@@ -8,9 +8,9 @@
 This package can quickly send a message to Slack. You can use this to notify you of any noteworthy events happening in your app.
 
 ```php
-use Spatie\SlackLogger\SlackLogger;
+use Spatie\SlackLogger\Slack;
 
-SlackLogger::display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+Slack::display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
 ```
 
 Under the hood, a job is used to communicate with Slack. This prevents your app from failing in case Slack is down.
