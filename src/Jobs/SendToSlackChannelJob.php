@@ -2,14 +2,12 @@
 
 namespace Spatie\SlackLogger\Jobs;
 
-use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use function report;
 
 class SendToSlackChannelJob implements ShouldQueue
 {
@@ -23,12 +21,10 @@ class SendToSlackChannelJob implements ShouldQueue
      */
     public int $maxExceptions = 3;
 
-
     public function __construct(
         public string $text,
         public string $webhookUrl
-    )
-    {
+    ) {
     }
 
     public function handle(): void

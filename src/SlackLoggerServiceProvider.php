@@ -16,7 +16,7 @@ class SlackLoggerServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        $this->app->bind('laravel-slack-logger', function() {
+        $this->app->bind('laravel-slack-logger', function () {
             return new Slack();
         });
     }
