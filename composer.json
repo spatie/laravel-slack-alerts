@@ -1,6 +1,6 @@
 {
     "name": "spatie/laravel-slack-logger",
-    "description": "Log to Slack using Jobs",
+    "description": "Send a message to Slack",
     "keywords": [
         "spatie",
         "laravel",
