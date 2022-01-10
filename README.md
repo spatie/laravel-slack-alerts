@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-slack-logger/Check%20&%20fix%20styling?label=code%20style)](https://github.com/spatie/laravel-slack-logger/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-slack-logger.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-logger)
 
-This package can quickly send a message to Slack. You can use this to notify you of any noteworthy events happening in your app.
+This package can quickly send a message to Slack. You can use this to notify yourself of any noteworthy events happening in your app.
 
 ```php
 use Spatie\SlackLogger\Slack;
