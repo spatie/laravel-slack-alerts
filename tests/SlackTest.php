@@ -9,7 +9,7 @@ use Spatie\SlackLogger\Slack;
 it('can dispatch a job', function () {
     Bus::fake();
 
-    Config::set('slack-logger.webhook_url', 'https://test-domain.com');
+    config()->set('slack-logger.webhook_url', 'https://test-domain.com');
 
     Slack::display('test-data');
 
@@ -19,7 +19,7 @@ it('can dispatch a job', function () {
 it('cannot dispatch a job with an invalid webhook url', function () {
     Bus::fake();
 
-    Config::set('slack-logger.webhook_url', '');
+    config()->set('slack-logger.webhook_url', '');
 
     $this->expectException(InvalidUrl::class);
 
