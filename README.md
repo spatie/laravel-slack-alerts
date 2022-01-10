@@ -5,17 +5,15 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-slack-logger/Check%20&%20fix%20styling?label=code%20style)](https://github.com/spatie/laravel-slack-logger/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-slack-logger.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-logger)
 
-Using this package you can send messages to a Slack channel with Laravel Jobs.
-
-When Slack is down, and exception will be thrown. This will be solved when using Jobs.
-
-Here's an example where we'll send a message to a Slack channel.
+This package can quickly send a message to Slack. You can use this to notify you of any noteworthy events happening in your app.
 
 ```php
-use  Spatie\SlackLogger\SlackLogger;
+use Spatie\SlackLogger\SlackLogger;
 
 SlackLogger::display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
 ```
+
+Under the hood, a job is used to communicate with Slack. This prevents your app from failing in case Slack is down.
 
 ## Support us
 
