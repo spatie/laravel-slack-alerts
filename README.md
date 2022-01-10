@@ -9,7 +9,7 @@
 This package can quickly send a message to Slack. You can use this to notify yourself of any noteworthy events happening in your app.
 
 ```php
-use Spatie\SlackLogger\Facades\Slack
+use Spatie\SlackLogger\Facades\Slack;
 
 Slack::display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
 ```
@@ -83,7 +83,7 @@ You can also use an alternative webhook, by specify extra ones in the config fil
 The webhook to be used can be chosen using the `in` function.
 
 ```php
-use Spatie\SlackLogger\Facades\Slack
+use Spatie\SlackLogger\Facades\Slack;
 
 Slack::in('marketing')->display("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
 ```
