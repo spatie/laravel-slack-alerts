@@ -32,8 +32,8 @@ class SendToSlackChannelJob implements ShouldQueue
             Http::post($this->webhookUrl, [
                 ['body' => json_encode($payload)],
             ]);
-        } catch (Exception $e) {
-            report($e);
+        } catch (Exception $exception) {
+            report($exception);
         }
     }
 }
