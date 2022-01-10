@@ -1,12 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Config;
 use Spatie\SlackLogger\Exceptions\InvalidUrl;
 use Spatie\SlackLogger\Jobs\SendToSlackChannelJob;
 use Spatie\SlackLogger\Slack;
 
-beforeEach(function() {
+beforeEach(function () {
     Bus::fake();
 });
 
