@@ -6,12 +6,12 @@
 [![Check & fix styling](https://github.com/spatie/laravel-slack-alerts/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/spatie/laravel-slack-alerts/actions/workflows/php-cs-fixer.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-slack-alerts.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-slack-alerts)
 
-This package can quickly send a message to Slack. You can use this to notify yourself of any noteworthy events happening in your app.
+This package can quickly send alerts to Slack. You can use this to notify yourself of any noteworthy events happening in your app.
 
 ```php
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
-SlackAlert::message("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+SlackAlert::message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
 Under the hood, a job is used to communicate with Slack. This prevents your app from failing in case Slack is down.
@@ -61,7 +61,7 @@ In the `webhooks_urls.default` key, you must specify a Slack webhook URL. You ca
 
 ## Usage
 
-To send a message to Slack, simply call `Slack::message()` and pass it any message you want.
+To send a message to Slack, simply call `SlackAlert::message()` and pass it any message you want.
 
 ```php
 SlackAlert::message("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
@@ -110,7 +110,6 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 - [Niels Vanpachtenbeke](https://github.com/Nielsvanpach)
 - [Freek Van der Herten](https://github.com/freekmurze)
-
 - [All Contributors](../../contributors)
 
 ## License
