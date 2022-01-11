@@ -29,7 +29,7 @@ class SendToSlackChannelJob implements ShouldQueue
 
     public function handle(): void
     {
-        $payload = ['text' => $this->text];
+        $payload = ['type' => 'mrkdown', 'text' => $this->text];
 
         Http::post($this->webhookUrl, $payload);
     }
