@@ -88,14 +88,24 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 SlackAlert::in('marketing')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
-## Markdown
+## Formatting
 
+### Markdown
 You can format your messages with markup. Learn how [in the Slack API docs](https://slack.com/help/articles/202288908-Format-your-messages).
 
 ```php
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
 SlackAlert::message("A message *with some bold statements* and _some italicized text_.");
+```
+
+### Emoji's
+
+You can use the same emoji codes as in Slack. This means custom emoji's are also supported.
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::message(":smile: :custom-code:");
 ```
 
 ## Testing
