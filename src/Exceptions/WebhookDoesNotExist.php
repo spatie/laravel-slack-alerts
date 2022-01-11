@@ -2,9 +2,9 @@
 
 namespace Spatie\SlackAlerts\Exceptions;
 
-use Exception;
+use RuntimeException;
 
-class WebhookDoesNotExist extends Exception
+class WebhookDoesNotExist extends RuntimeException
 {
     public static function make(string $name): self
     {

@@ -2,9 +2,9 @@
 
 namespace Spatie\SlackAlerts\Exceptions;
 
-use Exception;
+use RuntimeException;
 
-class WebhookUrlNotValid extends Exception
+class WebhookUrlNotValid extends RuntimeException
 {
     public static function make(string $name, string $url): self
     {

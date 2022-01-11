@@ -13,7 +13,7 @@ class Config
     {
         $jobClass = config('slack-alerts.job');
 
-        if (! class_exists($jobClass)) {
+        if (is_null($jobClass) || ! class_exists($jobClass)) {
             throw JobClassDoesNotExist::make($jobClass);
         }
 

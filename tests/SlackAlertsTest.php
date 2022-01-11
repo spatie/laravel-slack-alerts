@@ -46,3 +46,10 @@ it('will throw an exception for an invalid job class', function () {
 
     SlackAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
+
+it('will throw an exception for a missing job class', function () {
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('slack-alerts.job', null);
+
+    SlackAlert::message('test-data');
+})->throws(JobClassDoesNotExist::class);
