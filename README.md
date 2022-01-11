@@ -64,7 +64,7 @@ In the `webhooks_urls.default` key, you must specify a Slack webhook URL. You ca
 To send a message to Slack, simply call `SlackAlert::message()` and pass it any message you want.
 
 ```php
-SlackAlert::message("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+SlackAlert::message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
 ## Using multiple webhooks
@@ -85,7 +85,7 @@ The webhook to be used can be chosen using the `in` function.
 ```php
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
-SlackAlert::in('marketing')->message("{$user->email} has subscribed to the {$newsletter->name} newsletter!");
+SlackAlert::in('marketing')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
 ## Testing
