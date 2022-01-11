@@ -88,6 +88,16 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 SlackAlert::in('marketing')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
+## Markdown
+
+You can use formatting your messages with markup. You can learn how [in the Slack API docs](https://slack.com/help/articles/202288908-Format-your-messages).
+
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::message("A message *with some bold statements* and _some italicized text_.");
+```
+
 ## Testing
 
 ```bash
