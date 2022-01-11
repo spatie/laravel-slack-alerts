@@ -19,6 +19,7 @@ class SlackAlert
 
         $jobArguments = [
             'text' => $text,
+            'type' => 'mrkdown',
             'webhookUrl' => $webhookUrl,
         ];
 
