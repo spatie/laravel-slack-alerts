@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.0.1 - 2022-01-21
+
+- use env variable in config
+
 ## 1.0.0 - 2022-01-21
 
 - stable release
