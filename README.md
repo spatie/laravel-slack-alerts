@@ -16,6 +16,8 @@ SlackAlert::message("You have a new subscriber to the {$newsletter->name} newsle
 
 Under the hood, a job is used to communicate with Slack. This prevents your app from failing in case Slack is down.
 
+Want to send alerts to Discord instead? Check out [laravel-discord-alerts](https://github.com/spatie/laravel-discord-alerts).
+
 ## Support us
 
 [<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-slack-alerts.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-slack-alerts)
