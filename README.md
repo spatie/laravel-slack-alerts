@@ -32,7 +32,10 @@ You can install the package via composer:
 composer require spatie/laravel-slack-alerts
 ```
 
-You must publish the config file with:
+You can set a `SLACK_ALERT_WEBHOOK` env variable containing a valid Slack webhook URL. You can learn how to get a webhook URL [in the Slack API docs](https://api.slack.com/messaging/webhooks).
+
+
+Alternatively, you can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="slack-alerts-config"
@@ -57,8 +60,6 @@ return [
 ];
 
 ```
-
-In the `webhooks_urls.default` key, you must specify a Slack webhook URL. You can learn how to get a webhook URL [in the Slack API docs](https://api.slack.com/messaging/webhooks).
 
 ## Usage
 
