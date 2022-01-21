@@ -46,7 +46,7 @@ return [
      * The webhook URLs that we'll use to send a message to Slack.
      */
     'webhook_urls' => [
-        'default' => '',
+        'default' => env('SLACK_ALERT_WEBHOOK'),
     ],
 
     /*
@@ -55,6 +55,7 @@ return [
      */
     'job' => Spatie\SlackAlerts\Jobs\SendToSlackChannelJob::class,
 ];
+
 ```
 
 In the `webhooks_urls.default` key, you must specify a Slack webhook URL. You can learn how to get a webhook URL [in the Slack API docs](https://api.slack.com/messaging/webhooks).
