@@ -87,7 +87,7 @@ The webhook to be used can be chosen using the `in` function.
 ```php
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
-SlackAlert::in('marketing')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
+SlackAlert::to('marketing')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
 ## Formatting
