@@ -84,7 +84,7 @@ You can also use an alternative webhook, by specify extra ones in the config fil
 ],
 ```
 
-The webhook to be used can be chosen using the `in` function.
+The webhook to be used can be chosen using the `to` function.
 
 ```php
 use Spatie\SlackAlerts\Facades\SlackAlert;
