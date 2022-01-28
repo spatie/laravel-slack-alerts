@@ -23,7 +23,7 @@
     "require": {
         "php": "^8.0",
         "spatie/laravel-package-tools": "^1.9.2",
-        "illuminate/contracts": "^8.73"
+        "illuminate/contracts": "^8.73|^9.0"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.10|^6.0",
