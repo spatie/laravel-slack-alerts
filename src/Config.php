@@ -1,17 +1,17 @@
 <?php
 
-namespace Spatie\SlackAlerts;
+namespace GuyWarner\GoogleChatAlerts;
 
-use Spatie\SlackAlerts\Exceptions\JobClassDoesNotExist;
-use Spatie\SlackAlerts\Exceptions\WebhookDoesNotExist;
-use Spatie\SlackAlerts\Exceptions\WebhookUrlNotValid;
-use Spatie\SlackAlerts\Jobs\SendToSlackChannelJob;
+use GuyWarner\GoogleChatAlerts\Exceptions\JobClassDoesNotExist;
+use GuyWarner\GoogleChatAlerts\Exceptions\WebhookDoesNotExist;
+use GuyWarner\GoogleChatAlerts\Exceptions\WebhookUrlNotValid;
+use GuyWarner\GoogleChatAlerts\Jobs\SendToGoogleChatChannelJob;
 
 class Config
 {
-    public static function getJob(array $arguments): SendToSlackChannelJob
+    public static function getJob(array $arguments): SendToGoogleChatChannelJob
     {
-        $jobClass = config('slack-alerts.job');
+        $jobClass = config('google-chat-alerts.job');
 
         if (is_null($jobClass) || ! class_exists($jobClass)) {
             throw JobClassDoesNotExist::make($jobClass);
@@ -22,7 +22,7 @@ class Config
 
     public static function getWebhookUrl(string $name): string
     {
-        $url = config("slack-alerts.webhook_urls.{$name}");
+        $url = config("google-chat-alerts.webhook_urls.{$name}");
 
         if (is_null($url)) {
             throw WebhookDoesNotExist::make($name);

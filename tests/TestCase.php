@@ -1,16 +1,16 @@
 <?php
 
-namespace Spatie\SlackAlerts\Tests;
+namespace GuyWarner\GoogleChatAlerts\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\SlackAlerts\SlackAlertsServiceProvider;
+use GuyWarner\GoogleChatAlerts\GoogleChatAlertsServiceProvider;
 
 class TestCase extends Orchestra
 {
     protected function getPackageProviders($app): array
     {
         return [
-            SlackAlertsServiceProvider::class,
+            GoogleChatAlertsServiceProvider::class,
         ];
     }
 }

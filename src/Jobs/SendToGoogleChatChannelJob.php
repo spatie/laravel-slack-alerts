@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\SlackAlerts\Jobs;
+namespace GuyWarner\GoogleChatAlerts\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class SendToSlackChannelJob implements ShouldQueue
+class SendToGoogleChatChannelJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -31,7 +31,6 @@ class SendToSlackChannelJob implements ShouldQueue
     public function handle(): void
     {
         $payload = ['type' => $this->type, 'text' => $this->text];
-
         Http::post($this->webhookUrl, $payload);
     }
 }

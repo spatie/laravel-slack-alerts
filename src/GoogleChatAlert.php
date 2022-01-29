@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\SlackAlerts;
+namespace GuyWarner\GoogleChatAlerts;
 
-class SlackAlert
+class GoogleChatAlert
 {
     protected string $webhookUrlName = 'default';
 
