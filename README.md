@@ -95,12 +95,18 @@ SlackAlert::to('marketing')->message("You have a new subscriber to the {$newslet
 ## Formatting
 
 ### Markdown
-You can format your messages with markup. Learn how [in the Slack API docs](https://slack.com/help/articles/202288908-Format-your-messages).
+You can format your messages with Slack's markup. Learn how [in the Slack API docs](https://slack.com/help/articles/202288908-Format-your-messages).
 
 ```php
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
 SlackAlert::message("A message *with some bold statements* and _some italicized text_.");
+```
+
+Links are formatted differently in Slack than the classic markdown structure.
+
+```php
+SlackAlert::message("<https://spatie.be|This is a link to our homepage>");
 ```
 
 ### Emoji's
