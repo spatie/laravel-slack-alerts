@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.0.3 - 2022-02-24
+
+## What's Changed
+
+- Bump dependabot/fetch-metadata from 1.1.1 to 1.2.0 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/9
+- Feature/custom webhook url by @Nielsvanpach in https://github.com/spatie/laravel-slack-alerts/pull/10
+
+## New Contributors
+
+- @dependabot made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/9
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.0.2...1.0.3
+
 ## 1.0.2 - 2022-01-28
 
 ## What's Changed
