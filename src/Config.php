@@ -22,6 +22,10 @@ class Config
 
     public static function getWebhookUrl(string $name): string
     {
+        if (filter_var($name, FILTER_VALIDATE_URL)) {
+            return $name;
+        }
+
         $url = config("slack-alerts.webhook_urls.{$name}");
 
         if (is_null($url)) {
