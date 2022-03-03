@@ -17,7 +17,5 @@ it('can get a webhook url', function (string $name, string $result) {
 ]);
 
 it('cannot get a webhook url for an unknown config name', function () {
-    $this->expectException(WebhookDoesNotExist::class);
-
-    Config::getWebhookUrl('non-existing');
+    expect(Config::getWebhookUrl('non-existing'))->toBeNull();
 });

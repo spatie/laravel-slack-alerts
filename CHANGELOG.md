@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.1.0 - 2022-03-03
+
+- Ignore missing webhook urls, so it's safe to only have hooks setup in production, without your local development crashing
+
 ## 1.0.3 - 2022-02-24
 
 ## What's Changed

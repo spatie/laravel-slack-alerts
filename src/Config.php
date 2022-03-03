@@ -20,7 +20,7 @@ class Config
         return app($jobClass, $arguments);
     }
 
-    public static function getWebhookUrl(string $name): string
+    public static function getWebhookUrl(string $name): string|null
     {
         if (filter_var($name, FILTER_VALIDATE_URL)) {
             return $name;
@@ -29,7 +29,7 @@ class Config
         $url = config("slack-alerts.webhook_urls.{$name}");
 
         if (is_null($url)) {
-            throw WebhookDoesNotExist::make($name);
+            return null;
         }
 
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {

@@ -17,6 +17,10 @@ class SlackAlert
     {
         $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
 
+        if (! $webhookUrl) {
+            return;
+        }
+
         $jobArguments = [
             'text' => $text,
             'type' => 'mrkdown',
