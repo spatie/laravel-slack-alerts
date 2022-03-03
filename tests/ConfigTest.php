@@ -1,7 +1,6 @@
 <?php
 
 use Spatie\SlackAlerts\Config;
-use Spatie\SlackAlerts\Exceptions\WebhookDoesNotExist;
 
 beforeEach(function () {
     config()->set('slack-alerts.webhook_urls.default', 'https://default-domain.com');

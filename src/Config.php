@@ -3,7 +3,6 @@
 namespace Spatie\SlackAlerts;
 
 use Spatie\SlackAlerts\Exceptions\JobClassDoesNotExist;
-use Spatie\SlackAlerts\Exceptions\WebhookDoesNotExist;
 use Spatie\SlackAlerts\Exceptions\WebhookUrlNotValid;
 use Spatie\SlackAlerts\Jobs\SendToSlackChannelJob;
 
