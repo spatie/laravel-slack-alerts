@@ -27,7 +27,7 @@ class Config
 
         $url = config("slack-alerts.webhook_urls.{$name}");
 
-        if (is_null($url)) {
+        if (! $url) {
             return null;
         }
 
