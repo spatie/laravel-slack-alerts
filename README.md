@@ -138,7 +138,7 @@ You can use mentions to notify users and groups. Learn how [in the Slack API doc
 ```php
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
-SlackAlert::message("A message that notifies <@username> everyone else who is <!here>")
+SlackAlert::message("A message that notifies <@username> and everyone else who is <!here>")
 
 ```
 
