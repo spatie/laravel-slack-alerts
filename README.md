@@ -129,6 +129,17 @@ You can use the same emoji codes as in Slack. This means custom emoji's are also
 use Spatie\SlackAlerts\Facades\SlackAlert;
 
 SlackAlert::message(":smile: :custom-code:");
+
+```
+
+### Mentioning
+
+You can use mentions to notify users and groups. Learn how [in the Slack API docs](https://api.slack.com/reference/surfaces/formatting#mentioning-users).
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::message("A message that notifies <@username> and everyone else who is <!here>")
+
 ```
 
 ## Testing
