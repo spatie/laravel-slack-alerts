@@ -33,7 +33,7 @@ it('will throw an exception for a non existing job class', function () {
     SlackAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
 
-it('will not throw an exception for an empty webhook url', function() {
+it('will not throw an exception for an empty webhook url', function () {
     config()->set('slack-alerts.webhook_urls.default', '');
 
     SlackAlert::message('test-data');
