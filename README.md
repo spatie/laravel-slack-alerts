@@ -152,7 +152,7 @@ it('tests something', function() {
     SlackAlert::shouldReceive('message')->once();
     
     // execute code here that does send a message to Slack
-}
+});
 ```
 
 Of course, you can also assert that a message wasn't sent to Slack.
@@ -166,7 +166,7 @@ it('tests something', function() {
     SlackAlert::shouldReceive('message')->never();
     
     // execute code here that doesn't send a message to Slack
-}
+});
 ```
 
 ## Testing
