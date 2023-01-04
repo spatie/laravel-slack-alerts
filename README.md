@@ -139,6 +139,37 @@ SlackAlert::message("A message that notifies <@username> and everyone else who i
 
 ```
 
+### Usage in tests
+
+In your tests, you can make use of the `SlackAlert` facade to assert whether your code sent an alert to Slack. 
+
+```php
+// in a test
+
+use Illuminate\Support\Facades\Event;
+
+it('tests something', function() {
+
+    SlackAlert::shouldReceive('message')->once();
+    
+    // execute code here that does send a message to Slack
+}
+```
+
+Of course, you can also assert that a message wasn't sent to Slack.
+
+```php
+// in a test
+
+use Illuminate\Support\Facades\Event;
+
+it('tests something', function() {
+    SlackAlert::shouldReceive('message')->never();
+    
+    // execute code here that doesn't send a message to Slack
+}
+```
+
 ## Testing
 
 ```bash
