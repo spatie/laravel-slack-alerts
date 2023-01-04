@@ -145,9 +145,9 @@ In your tests, you can make use of the `SlackAlert` facade to assert whether you
 ```php
 // in a test
 
-use Illuminate\Support\Facades\Event;
+use Spatie\SlackAlerts\Facades\SlackAlert;
 
-it('tests something', function() {
+it('will send an alert to Slack', function() {
 
     SlackAlert::shouldReceive('message')->once();
     
@@ -160,9 +160,9 @@ Of course, you can also assert that a message wasn't sent to Slack.
 ```php
 // in a test
 
-use Illuminate\Support\Facades\Event;
+use Spatie\SlackAlerts\Facades\SlackAlert;
 
-it('tests something', function() {
+it('will not send an alert to Slack', function() {
     SlackAlert::shouldReceive('message')->never();
     
     // execute code here that doesn't send a message to Slack
