@@ -70,6 +70,22 @@ To send a message to Slack, simply call `SlackAlert::message()` and pass it any 
 SlackAlert::message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
+## Sending blocks
+
+Slack supports sending rich formatting using their [Block Kit](https://api.slack.com/block-kit) API, you can send a set of blocks using the `blocks()` method:
+
+```php
+SlackAlert::blocks([
+    [
+        "type" => "section",
+        "text" => [
+        "type" => "mrkdwn",
+            "text" => "You have a new subscriber to the {$newsletter->name} newsletter!"
+        ]
+    ]
+]);
+```
+
 ## Using multiple webhooks
 
 You can also use an alternative webhook, by specify extra ones in the config file.
