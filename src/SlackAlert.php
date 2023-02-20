@@ -21,13 +21,26 @@ class SlackAlert
             return;
         }
 
-        $jobArguments = [
+        $job = Config::getJob([
             'text' => $text,
-            'type' => 'mrkdown',
             'webhookUrl' => $webhookUrl,
-        ];
+        ]);
 
-        $job = Config::getJob($jobArguments);
+        dispatch($job);
+    }
+
+    public function blocks(array $blocks): void
+    {
+        $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
+
+        if (! $webhookUrl) {
+            return;
+        }
+
+        $job = Config::getJob([
+            'blocks' => $blocks,
+            'webhookUrl' => $webhookUrl,
+        ]);
 
         dispatch($job);
     }
