@@ -26,9 +26,9 @@ it('can dispatch a job to send a set of blocks to slack using the default webhoo
             "type" => "section",
             "text" => [
                 "type" => "mrkdwn",
-                "text" => "Hello!"
-            ]
-        ]
+                "text" => "Hello!",
+            ],
+        ],
     ]);
 
     Bus::assertDispatched(SendToSlackChannelJob::class);
