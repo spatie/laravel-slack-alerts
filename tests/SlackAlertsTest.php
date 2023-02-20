@@ -18,6 +18,22 @@ it('can dispatch a job to send a message to slack using the default webhook url'
     Bus::assertDispatched(SendToSlackChannelJob::class);
 });
 
+it('can dispatch a job to send a set of blocks to slack using the default webhook url', function () {
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+
+    SlackAlert::blocks([
+        [
+            "type" => "section",
+            "text" => [
+                "type" => "mrkdwn",
+                "text" => "Hello!",
+            ],
+        ],
+    ]);
+
+    Bus::assertDispatched(SendToSlackChannelJob::class);
+});
+
 it('can dispatch a job to send a message to slack using an alternative webhook url', function () {
     config()->set('slack-alerts.webhook_urls.marketing', 'https://test-domain.com');
 
