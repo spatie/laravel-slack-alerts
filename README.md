@@ -215,4 +215,4 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 ## Alternatives
 
-If you want to send rich messages with Block Kit, we suggest using [slack-php/slack-php-block-kit](https://github.com/slack-php/slack-php-block-kit)
+If you want to do more complex stuff with Block Kit, we suggest using [slack-php/slack-php-block-kit](https://github.com/slack-php/slack-php-block-kit)
