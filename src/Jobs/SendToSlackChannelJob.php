@@ -25,15 +25,29 @@ class SendToSlackChannelJob implements ShouldQueue
         public string $webhookUrl,
         public ?string $text = null,
         public ?array $blocks = null,
+        public array $meta = [],
     ) {
     }
 
     public function handle(): void
     {
         $payload = $this->text
-            ? ['type' => 'mrkdwn', 'text' => $this->text]
-            : ['blocks' => $this->blocks];
+            ? $this->getMessage()
+            : $this->getBlocks();
 
         Http::post($this->webhookUrl, $payload);
+    }
+
+    protected function getMessage(): array
+    {
+        return array_merge(
+            $this->meta,
+            ['type' => 'mrkdwn', 'text' => $this->text],
+        );
+    }
+
+    protected function getBlocks(): array
+    {
+        return ['blocks' => $this->blocks];
     }
 }

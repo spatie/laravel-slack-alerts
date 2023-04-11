@@ -144,6 +144,68 @@ SlackAlert::message(":smile: :custom-code:");
 
 ```
 
+### Customization user name & icon
+You can use different custom names and icons for messages. Add meta defintions to your webhooks.
+
+Make sure your webhook URL names match with your meta defintions. 
+
+```php
+// in config/slack-alerts.php
+
+[
+    'webhook_urls' => [
+        'notices' => env('SLACK_ALERT_WEBHOOK_NOTICES'),
+    ],
+
+    'meta' => [
+        'notices' => [
+            'username' => 'harambe',
+            'icon_url' => null,
+            'icon_emoji' => ':ghost:',
+        ],
+    ],
+];
+```
+
+### Customization with different user names & icons per channel
+Define with tags different custom icons and user names per channel
+
+```php
+// in config/slack-alerts.php
+
+[
+    'webhook_urls' => [
+        'notices' => env('SLACK_ALERT_WEBHOOK_NOTICES'),
+    ],
+
+    'meta' => [
+        'notices' => [
+            'username' => 'harambe',
+            'icon_url' => null,
+            'icon_emoji' => ':ghost:',
+        ],
+        
+        'notices:abc' => [
+            'username' => 'hanuman',
+            'icon_url' => null,
+            'icon_emoji' => ':see_no_evil:',
+        ],
+    ],
+];
+```
+
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+// user name: hanuman; icon: see_no_evil
+SlackAlert::to('notices')->tag('abc')->message('test1');
+// user name: harambe; icon: ghost
+SlackAlert::to('notices')->tag('def')->message('test2');
+// user name: harambe; icon: ghost
+SlackAlert::to('notices')->message('test3');
+```
+There is a fallback to the primary webhook URL name, if the config does not exist.
+
 ### Mentioning
 
 You can use mentions to notify users and groups. Learn how [in the Slack API docs](https://api.slack.com/reference/surfaces/formatting#mentioning-users).
@@ -215,4 +277,4 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 ## Alternatives
 
-If you want to do more complex stuff with Block Kit, we suggest using [slack-php/slack-php-block-kit](https://github.com/slack-php/slack-php-block-kit)
+If you want to send rich messages with Block Kit, we suggest using [slack-php/slack-php-block-kit](https://github.com/slack-php/slack-php-block-kit)
