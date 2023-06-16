@@ -16,6 +16,8 @@ class SendToSlackChannelJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
+    public int $tries = 0;
+    
     /**
      * The maximum number of unhandled exceptions to allow before failing.
      */
@@ -34,6 +36,6 @@ class SendToSlackChannelJob implements ShouldQueue
             ? ['type' => 'mrkdwn', 'text' => $this->text]
             : ['blocks' => $this->blocks];
 
-        Http::post($this->webhookUrl, $payload);
+        Http::post($this->webhookUrl, $payload)->throw();
     }
 }
