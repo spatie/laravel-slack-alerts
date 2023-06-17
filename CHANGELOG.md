@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.2.1 - 2023-06-17
+
+### What's Changed
+
+- Bump dependabot/fetch-metadata from 1.3.6 to 1.4.0 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/29
+- Bump dependabot/fetch-metadata from 1.4.0 to 1.5.0 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/30
+- Bump dependabot/fetch-metadata from 1.5.0 to 1.5.1 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/32
+- Fix SendToSlackChannelJob retry on error by @tominon in https://github.com/spatie/laravel-slack-alerts/pull/33
+
+### New Contributors
+
+- @tominon made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/33
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.2.0...1.2.1
+
 ## 1.2.0 - 2023-02-20
 
 ### What's Changed
