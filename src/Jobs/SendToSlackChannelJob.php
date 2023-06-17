@@ -17,7 +17,7 @@ class SendToSlackChannelJob implements ShouldQueue
     use SerializesModels;
 
     public int $tries = 0;
-    
+
     /**
      * The maximum number of unhandled exceptions to allow before failing.
      */
