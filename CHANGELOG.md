@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.3.0 - 2023-06-27
+
+### What's Changed
+
+- Feature: Added ability to send message to a custom channel. by @bohdanlopatkin in https://github.com/spatie/laravel-slack-alerts/pull/34
+
+### New Contributors
+
+- @bohdanlopatkin made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/34
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.2.1...1.3.0
+
 ## 1.2.1 - 2023-06-17
 
 ### What's Changed
