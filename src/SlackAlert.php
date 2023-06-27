@@ -32,7 +32,7 @@ class SlackAlert
         $job = Config::getJob([
             'text' => $text,
             'webhookUrl' => $webhookUrl,
-            'channel' => $this->channel
+            'channel' => $this->channel,
         ]);
 
         dispatch($job);
@@ -49,7 +49,7 @@ class SlackAlert
         $job = Config::getJob([
             'blocks' => $blocks,
             'webhookUrl' => $webhookUrl,
-            'channel' => $this->channel
+            'channel' => $this->channel,
         ]);
 
         dispatch($job);
