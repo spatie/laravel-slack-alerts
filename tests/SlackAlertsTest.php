@@ -42,6 +42,14 @@ it('can dispatch a job to send a message to slack using an alternative webhook u
     Bus::assertDispatched(SendToSlackChannelJob::class);
 });
 
+it('can dispatch a job to send a message to slack alternative channel', function () {
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+
+    SlackAlert::toChannel('random')->message('test-data');
+
+    Bus::assertDispatched(SendToSlackChannelJob::class);
+});
+
 it('will throw an exception for a non existing job class', function () {
     config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
     config()->set('slack-alerts.job', 'non-existing-job');

@@ -5,10 +5,18 @@ namespace Spatie\SlackAlerts;
 class SlackAlert
 {
     protected string $webhookUrlName = 'default';
+    protected ?string $channel = null;
 
     public function to(string $webhookUrlName): self
     {
         $this->webhookUrlName = $webhookUrlName;
+
+        return $this;
+    }
+
+    public function toChannel(string $channel): self
+    {
+        $this->channel = $channel;
 
         return $this;
     }
@@ -24,6 +32,7 @@ class SlackAlert
         $job = Config::getJob([
             'text' => $text,
             'webhookUrl' => $webhookUrl,
+            'channel' => $this->channel
         ]);
 
         dispatch($job);
@@ -40,6 +49,7 @@ class SlackAlert
         $job = Config::getJob([
             'blocks' => $blocks,
             'webhookUrl' => $webhookUrl,
+            'channel' => $this->channel
         ]);
 
         dispatch($job);

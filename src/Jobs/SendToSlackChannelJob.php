@@ -27,6 +27,7 @@ class SendToSlackChannelJob implements ShouldQueue
         public string $webhookUrl,
         public ?string $text = null,
         public ?array $blocks = null,
+        public ?string $channel = null,
     ) {
     }
 
@@ -35,6 +36,10 @@ class SendToSlackChannelJob implements ShouldQueue
         $payload = $this->text
             ? ['type' => 'mrkdwn', 'text' => $this->text]
             : ['blocks' => $this->blocks];
+
+        if ($this->channel) {
+            $payload['channel'] = $this->channel;
+        }
 
         Http::post($this->webhookUrl, $payload)->throw();
     }
