@@ -117,6 +117,36 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 SlackAlert::to('https://custom-url.com')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
+### Using a custom name
+
+The `username` function supports custom user name.
+
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::username('custom name')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
+```
+
+### Using a custom icon image
+
+The `iconUrl` function supports custom user icon image.
+
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::iconUrl('https://custom-url/img/icons/app-57.png')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
+```
+
+### Using a custom icon emoji
+
+The `iconEmoji` function supports custom user icon emoji.
+
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::iconEmoji(':ghost:')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
+```
+
 ### Sending message to an alternative channel
 
 You can send a message to a channel other than the default one for the webhook, by passing it to the `toChannel` function.
