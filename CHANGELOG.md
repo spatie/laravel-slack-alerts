@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.3.1 - 2024-02-09
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 1.5.1 to 1.6.0 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/35
+* Bump actions/checkout from 3 to 4 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/38
+* Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/39
+* Add Laravel 11 compatability by @AJenbo in https://github.com/spatie/laravel-slack-alerts/pull/44
+
+### New Contributors
+
+* @AJenbo made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/44
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.3.0...1.3.1
+
 ## 1.3.0 - 2023-06-27
 
 ### What's Changed
