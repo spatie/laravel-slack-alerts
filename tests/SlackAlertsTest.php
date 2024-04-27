@@ -82,3 +82,17 @@ it('will throw an exception for a missing job class', function () {
 
     SlackAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
+
+it('can send a message via a queue different than the default', function(){
+    config()->set('slack-alerts.queue', 'my-queue');
+
+    SlackAlert::message('test-data');
+
+    Bus::assertDispatchedOnQueue(SendToSlackChannelJob::class, 'my-queue');
+});
+
+it('can send a message via a queue set at runtime ', function(){
+    SlackAlert::onQueue('my-queue')->message('test-data');
+
+    Bus::assertDispatchedOnQueue(SendToSlackChannelJob::class, 'my-queue');
+});
