@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Queue;
 use Spatie\SlackAlerts\Exceptions\JobClassDoesNotExist;
 use Spatie\SlackAlerts\Exceptions\WebhookUrlNotValid;
 use Spatie\SlackAlerts\Facades\SlackAlert;
