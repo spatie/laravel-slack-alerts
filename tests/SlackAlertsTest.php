@@ -84,19 +84,24 @@ it('will throw an exception for a missing job class', function () {
     SlackAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
 
-it('can send a message via a queue different than the default', function(){
-    config()->set('slack-alerts.queue', 'my-queue');
-    Queue::fake();
+it('can send a message via a queue set in config file ', function(string $queue){
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('slack-alerts.queue', $queue);
 
     SlackAlert::message('test-data');
 
-    Queue::assertPushedOn('my-queue', SendToSlackChannelJob::class);
-});
+    Bus::assertDispatched( SendToSlackChannelJob::class);
+})->with([
+    'default', 'my-queue'
+]);
 
-it('can send a message via a queue set at runtime ', function(){
-    Queue::fake();
+it('can send a message via a queue set at runtime ', function(string $queue){
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('slack-alerts.queue', 'custom-queue');
 
-    SlackAlert::onQueue('my-queue')->message('test-data');
+    SlackAlert::onQueue( $queue )->message('test-data');
 
-    Queue::assertPushedOn('my-queue', SendToSlackChannelJob::class);
-});
+    Bus::assertDispatched( SendToSlackChannelJob::class);
+})->with([
+    'default', 'my-queue'
+]);

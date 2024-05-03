@@ -44,8 +44,9 @@ class SlackAlert
             'channel' => $this->channel,
         ]);
 
-        dispatch($job)
-            ->onQueue( $this->queue ?? Config::getQueue() );
+        dispatch(
+            $job->onQueue( $this->queue ?? Config::getQueue() )
+        );
     }
 
     public function blocks(array $blocks): void
@@ -62,7 +63,8 @@ class SlackAlert
             'channel' => $this->channel,
         ]);
 
-        dispatch($job)
-            ->onQueue( $this->queue ?? Config::getQueue() );
+        dispatch(
+            $job->onQueue( $this->queue ?? Config::getQueue() )
+        );
     }
 }
