@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.4.0 - 2024-05-06
+
+### What's Changed
+
+* Bump ramsey/composer-install from 2 to 3 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/45
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.0.0 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/46
+* Bump dependabot/fetch-metadata from 2.0.0 to 2.1.0 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/48
+* Add queue support for Slack alerts by @mcpuishor in https://github.com/spatie/laravel-slack-alerts/pull/47
+
+### New Contributors
+
+* @mcpuishor made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/47
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.3.1...1.4.0
+
 ## 1.3.1 - 2024-02-09
 
 ### What's Changed
