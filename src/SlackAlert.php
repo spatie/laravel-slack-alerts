@@ -45,7 +45,7 @@ class SlackAlert
         ]);
 
         dispatch(
-            $job->onQueue( $this->queue ?? Config::getQueue() )
+            $job->onQueue($this->queue ?? Config::getQueue())
         );
     }
 
@@ -64,7 +64,7 @@ class SlackAlert
         ]);
 
         dispatch(
-            $job->onQueue( $this->queue ?? Config::getQueue() )
+            $job->onQueue($this->queue ?? Config::getQueue())
         );
     }
 }
