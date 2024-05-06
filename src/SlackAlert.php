@@ -7,6 +7,8 @@ class SlackAlert
     protected string $webhookUrlName = 'default';
     protected ?string $channel = null;
 
+    protected ?string $queue = null;
+
     public function to(string $webhookUrlName): self
     {
         $this->webhookUrlName = $webhookUrlName;
@@ -17,6 +19,13 @@ class SlackAlert
     public function toChannel(string $channel): self
     {
         $this->channel = $channel;
+
+        return $this;
+    }
+
+    public function onQueue(string $queue): self
+    {
+        $this->queue = $queue;
 
         return $this;
     }
@@ -35,7 +44,9 @@ class SlackAlert
             'channel' => $this->channel,
         ]);
 
-        dispatch($job);
+        dispatch(
+            $job->onQueue( $this->queue ?? Config::getQueue() )
+        );
     }
 
     public function blocks(array $blocks): void
@@ -52,6 +63,8 @@ class SlackAlert
             'channel' => $this->channel,
         ]);
 
-        dispatch($job);
+        dispatch(
+            $job->onQueue( $this->queue ?? Config::getQueue() )
+        );
     }
 }

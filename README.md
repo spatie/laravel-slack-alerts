@@ -127,6 +127,25 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 SlackAlert::toChannel('subscription_alerts')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
+## Queuing
+By default, messages are sent by dispatching the job to the `default` queue. 
+
+### Configuring the queue
+In `.env` file, add
+
+```dotenv
+SLACK_ALERT_QUEUE=queue_name
+```
+
+### Changing the queue at runtime
+You can queue the job to a different queue than the one defined in config by passing it to the `onQueue` function.
+
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::onQueue('some-queue')->message("Some message.");
+```
+
 ## Formatting
 
 ### Markdown

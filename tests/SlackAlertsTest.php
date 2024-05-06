@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Queue;
 use Spatie\SlackAlerts\Exceptions\JobClassDoesNotExist;
 use Spatie\SlackAlerts\Exceptions\WebhookUrlNotValid;
 use Spatie\SlackAlerts\Facades\SlackAlert;
@@ -82,3 +83,25 @@ it('will throw an exception for a missing job class', function () {
 
     SlackAlert::message('test-data');
 })->throws(JobClassDoesNotExist::class);
+
+it('can send a message via a queue set in config file ', function(string $queue){
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('slack-alerts.queue', $queue);
+
+    SlackAlert::message('test-data');
+
+    Bus::assertDispatched( SendToSlackChannelJob::class);
+})->with([
+    'default', 'my-queue'
+]);
+
+it('can send a message via a queue set at runtime ', function(string $queue){
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('slack-alerts.queue', 'custom-queue');
+
+    SlackAlert::onQueue( $queue )->message('test-data');
+
+    Bus::assertDispatched( SendToSlackChannelJob::class);
+})->with([
+    'default', 'my-queue'
+]);

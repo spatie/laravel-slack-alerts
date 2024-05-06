@@ -37,4 +37,15 @@ class Config
 
         return $url;
     }
+
+    public static function getQueue(): string|null
+    {
+        $queue = config('slack-alerts.queue');
+
+        if (! $queue) {
+            return null;
+        }
+
+        return $queue;
+    }
 }
