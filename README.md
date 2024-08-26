@@ -128,7 +128,7 @@ SlackAlert::toChannel('subscription_alerts')->message("You have a new subscriber
 ```
 
 ## Queuing
-By default, messages are sent by dispatching the job to the `default` queue. 
+By default, messages are sent by dispatching the job to the `default` queue.
 
 ### Configuring the queue
 In `.env` file, add
@@ -181,6 +181,24 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 
 SlackAlert::message("A message that notifies <@username> and everyone else who is <!here>")
 
+```
+
+### Icon Change
+
+You can change the icon that appears next to the display-name at the top of the message.
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::withIconURL('https://example.com/tiny-icon.jpg')->message("Some message.");
+```
+
+### Display Name Change
+
+You can change the Display-Name that appears next to the display-name at the top of the message.
+```php
+use Spatie\SlackAlerts\Facades\SlackAlert;
+
+SlackAlert::withUsername('More Descriptive Name')->message("Some message.");
 ```
 
 ### Usage in tests
