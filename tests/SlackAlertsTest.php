@@ -104,3 +104,15 @@ it('can send a message via a queue set at runtime ', function (string $queue) {
 })->with([
     'default', 'my-queue',
 ]);
+
+it('can send a message via a username set at runtime ', function () {
+    SlackAlert::withUsername('My New Name #1')->message('test-data');
+
+    Bus::assertDispatched(SendToSlackChannelJob::class);
+});
+
+it('can send a message via a icon_url set at runtime ', function () {
+    SlackAlert::withIconURL('https://www.example.com/icon.jpg')->message('test-data');
+
+    Bus::assertDispatched(SendToSlackChannelJob::class);
+});
