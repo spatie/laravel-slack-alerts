@@ -44,7 +44,7 @@ class SlackAlert
 
     public function withIconURL(string $icon_url): self
     {
-        $this->$icon_url = $icon_url;
+        $this->icon_url = $icon_url;
 
         return $this;
     }
