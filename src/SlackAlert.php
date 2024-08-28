@@ -5,9 +5,14 @@ namespace Spatie\SlackAlerts;
 class SlackAlert
 {
     protected string $webhookUrlName = 'default';
+
     protected ?string $channel = null;
 
     protected ?string $queue = null;
+
+    protected ?string $username = null;
+
+    protected ?string $icon_url = null;
 
     public function to(string $webhookUrlName): self
     {
@@ -30,6 +35,20 @@ class SlackAlert
         return $this;
     }
 
+    public function withUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function withIconURL(string $icon_url): self
+    {
+        $this->icon_url = $icon_url;
+
+        return $this;
+    }
+
     public function message(string $text): void
     {
         $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
@@ -42,6 +61,8 @@ class SlackAlert
             'text' => $text,
             'webhookUrl' => $webhookUrl,
             'channel' => $this->channel,
+            'username' => $this->username,
+            'icon_url' => $this->icon_url,
         ]);
 
         dispatch(
@@ -61,6 +82,8 @@ class SlackAlert
             'blocks' => $blocks,
             'webhookUrl' => $webhookUrl,
             'channel' => $this->channel,
+            'username' => $this->username,
+            'icon_url' => $this->icon_url,
         ]);
 
         dispatch(
