@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.6.0 - 2025-02-26
+
+### What's Changed
+
+* Added queue to the config file in the README.md by @mikkellindblom in https://github.com/spatie/laravel-slack-alerts/pull/55
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/spatie/laravel-slack-alerts/pull/56
+* Update composer.json for Laravel 12 by @phil-hudson in https://github.com/spatie/laravel-slack-alerts/pull/57
+
+### New Contributors
+
+* @mikkellindblom made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/55
+* @phil-hudson made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/57
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.5.0...1.6.0
+
 ## 1.5.0 - 2024-08-28
 
 ### What's Changed
