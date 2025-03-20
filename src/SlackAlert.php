@@ -14,6 +14,8 @@ class SlackAlert
 
     protected ?string $icon_url = null;
 
+    protected ?string $icon_emoji = null;
+
     public function to(string $webhookUrlName): self
     {
         $this->webhookUrlName = $webhookUrlName;
@@ -49,6 +51,13 @@ class SlackAlert
         return $this;
     }
 
+    public function withIconEmoji(string $icon_emoji): self
+    {
+        $this->icon_emoji = $icon_emoji;
+
+        return $this;
+    }
+
     public function message(string $text): void
     {
         $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
@@ -63,6 +72,7 @@ class SlackAlert
             'channel' => $this->channel,
             'username' => $this->username,
             'icon_url' => $this->icon_url,
+            'icon_emoji' => $this->icon_emoji,
         ]);
 
         dispatch(
@@ -84,6 +94,7 @@ class SlackAlert
             'channel' => $this->channel,
             'username' => $this->username,
             'icon_url' => $this->icon_url,
+            'icon_emoji' => $this->icon_emoji,
         ]);
 
         dispatch(

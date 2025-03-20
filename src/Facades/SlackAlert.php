@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void blocks(array $blocks)
  * @method static self withUsername(string $text)
  * @method static self withIconURL(string $text)
+ * @method static self withIconEmoji(string $text)
  * @method static self onQueue(string $text)
  *
  * @see \Spatie\SlackAlerts\SlackAlert
