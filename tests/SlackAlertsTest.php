@@ -120,3 +120,11 @@ it('can send a message via a icon_url set at runtime ', function () {
 
     Bus::assertDispatched(SendToSlackChannelJob::class);
 });
+
+it('can send a message via a icon_emoji set at runtime ', function () {
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+
+    SlackAlert::withIconEmoji(':heart:')->message('test-data');
+
+    Bus::assertDispatched(SendToSlackChannelJob::class);
+});

@@ -30,6 +30,7 @@ class SendToSlackChannelJob implements ShouldQueue
         public ?string $channel = null,
         public ?string $username = null,
         public ?string $icon_url = null,
+        public ?string $icon_emoji = null,
     ) {
     }
 
@@ -45,6 +46,10 @@ class SendToSlackChannelJob implements ShouldQueue
 
         if ($this->icon_url) {
             $payload['icon_url'] = $this->icon_url;
+        }
+
+        if ($this->icon_emoji) {
+            $payload['icon_emoji'] = $this->icon_emoji;
         }
 
         if ($this->username) {
