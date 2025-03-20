@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.7.0 - 2025-03-20
+
+### What's Changed
+
+* Feature: added support of icon_emoji by @vzhabonos in https://github.com/spatie/laravel-slack-alerts/pull/58
+
+### New Contributors
+
+* @vzhabonos made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/58
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.6.0...1.7.0
+
 ## 1.6.0 - 2025-02-26
 
 ### What's Changed
