@@ -63,6 +63,13 @@ it('will not throw an exception for an empty webhook url', function () {
     SlackAlert::message('test-data');
 })->expectNotToPerformAssertions();
 
+it('will not send a message if the alerts are disabled', function () {
+    config()->set('slack-alerts.webhook_urls.default', 'https://test-domain.com');
+    config()->set('slack-alerts.enabled', false);
+
+    SlackAlert::message('test-data');
+})->expectNotToPerformAssertions();
+
 it('will throw an exception for an invalid webhook url', function () {
     config()->set('slack-alerts.webhook_urls.default', 'not-an-url');
 

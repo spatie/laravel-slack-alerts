@@ -2,6 +2,11 @@
 
 return [
     /*
+     * Whether the slack alerts are enabled.
+     */
+    'enabled' => env('SLACK_ALERT_ENABLED', true),
+
+    /*
      * The webhook URLs that we'll use to send a message to Slack.
      */
     'webhook_urls' => [

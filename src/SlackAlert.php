@@ -62,7 +62,7 @@ class SlackAlert
     {
         $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
 
-        if (! $webhookUrl) {
+        if (!Config::isEnabled() || ! $webhookUrl) {
             return;
         }
 
@@ -84,7 +84,7 @@ class SlackAlert
     {
         $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
 
-        if (! $webhookUrl) {
+        if (!Config::isEnabled() || ! $webhookUrl) {
             return;
         }
 

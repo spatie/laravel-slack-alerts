@@ -48,4 +48,9 @@ class Config
 
         return $queue;
     }
+
+    public static function isEnabled(): bool
+    {
+        return config('slack-alerts.enabled', true);
+    }
 }
