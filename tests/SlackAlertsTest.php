@@ -68,7 +68,10 @@ it('will not send a message if the alerts are disabled', function () {
     config()->set('slack-alerts.enabled', false);
 
     SlackAlert::message('test-data');
-})->expectNotToPerformAssertions();
+    SlackAlert::blocks([]);
+
+    Bus::assertNotDispatched(SendToSlackChannelJob::class);
+});
 
 it('will throw an exception for an invalid webhook url', function () {
     config()->set('slack-alerts.webhook_urls.default', 'not-an-url');
