@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.7.1 - 2025-04-17
+
+### What's Changed
+
+* Enabled config option by @ReinisL in https://github.com/spatie/laravel-slack-alerts/pull/60
+
+### New Contributors
+
+* @ReinisL made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/60
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.7.0...1.7.1
+
 ## 1.7.0 - 2025-03-20
 
 ### What's Changed
