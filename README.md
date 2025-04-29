@@ -209,7 +209,23 @@ SlackAlert::withUsername('More Descriptive Name')->message("Some message.");
 
 ### Usage in tests
 
-In your tests, you can make use of the `SlackAlert` facade to assert whether your code sent an alert to Slack. 
+The package provides a `SlackAlertFake` that you can use to test your code without actually sending messages to Slack.
+
+In your tests, you should call the `fake` method on the `SlackAlert` facade to start faking.
+
+```php
+\Spatie\SlackAlerts\Facades\SlackAlert::fake();
+```
+
+These methods are available on the fake:
+
+- `expectMessageSentContaining(string $expectedSubstring)`: Expects that at least one message contains the given substring
+- `expectMessagesSent($callable = null)`: Expects that at least one message was sent. Optionally you can pass a callable that will get called for each message sent. Return true in one of the calls to make the expectation pass
+- `expectNoMessagesSent()`: Expects that no messages were sent
+- `expectNumberOfMessagesSent(int $expectedCount)`: Expects that exactly the given number of messages were sent
+- `sentMessages()`: Returns all messages that were sent so you can pass the message to your own expectations
+
+Alternatively, you can make use of the classic mocking approach.
 
 ```php
 // in a test

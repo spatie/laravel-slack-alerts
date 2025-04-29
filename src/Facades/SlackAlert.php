@@ -3,6 +3,7 @@
 namespace Spatie\SlackAlerts\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Spatie\SlackAlerts\FakeSlackAlert;
 
 /**
  * @method static self to(string $text)
@@ -21,5 +22,12 @@ class SlackAlert extends Facade
     protected static function getFacadeAccessor(): string
     {
         return 'laravel-slack-alerts';
+    }
+
+    public static function fake()
+    {
+        static::swap(new FakeSlackAlert());
+
+        return new static;
     }
 }

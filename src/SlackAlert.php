@@ -60,45 +60,47 @@ class SlackAlert
 
     public function message(string $text): void
     {
-        $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
-
-        if (! Config::isEnabled() || ! $webhookUrl) {
-            return;
-        }
-
-        $job = Config::getJob([
-            'text' => $text,
-            'webhookUrl' => $webhookUrl,
-            'channel' => $this->channel,
-            'username' => $this->username,
-            'icon_url' => $this->icon_url,
-            'icon_emoji' => $this->icon_emoji,
-        ]);
-
-        dispatch(
-            $job->onQueue($this->queue ?? Config::getQueue())
-        );
+        $this->dispatchJob(['text' => $text]);
     }
 
     public function blocks(array $blocks): void
     {
-        $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
+        $this->dispatchJob(['blocks' => $blocks]);
+    }
 
-        if (! Config::isEnabled() || ! $webhookUrl) {
+    protected function dispatchJob(array $extraProperties): void
+    {
+        $allProperties = array_merge(
+            $this->getBaseProperties(),
+            $extraProperties,
+        );
+
+        if (! Config::isEnabled() || empty($allProperties['webhookUrl'])) {
             return;
         }
 
-        $job = Config::getJob([
-            'blocks' => $blocks,
+        $job = Config::getJob($allProperties);
+
+        dispatch(
+            $job->onQueue($this->queue())
+        );
+    }
+
+    protected function getBaseProperties(): array
+    {
+        $webhookUrl = Config::getWebhookUrl($this->webhookUrlName);
+
+        return [
             'webhookUrl' => $webhookUrl,
             'channel' => $this->channel,
             'username' => $this->username,
             'icon_url' => $this->icon_url,
             'icon_emoji' => $this->icon_emoji,
-        ]);
+        ];
+    }
 
-        dispatch(
-            $job->onQueue($this->queue ?? Config::getQueue())
-        );
+    protected function queue(): string
+    {
+        return $this->queue ?? Config::getQueue();
     }
 }
