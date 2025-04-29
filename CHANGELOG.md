@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.7.2 - 2025-04-29
+
+### What's Changed
+
+* Add fake by @freekmurze in https://github.com/spatie/laravel-slack-alerts/pull/61
+
+### New Contributors
+
+* @freekmurze made their first contribution in https://github.com/spatie/laravel-slack-alerts/pull/61
+
+**Full Changelog**: https://github.com/spatie/laravel-slack-alerts/compare/1.7.1...1.7.2
+
 ## 1.7.1 - 2025-04-17
 
 ### What's Changed
