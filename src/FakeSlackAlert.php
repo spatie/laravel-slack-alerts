@@ -12,14 +12,16 @@ class FakeSlackAlert extends SlackAlert
     public function message(string $text): void
     {
         $this->sentMessages[] = array_merge(
-            $this->getBaseProperties(), ['text' => $text]
+            $this->getBaseProperties(),
+            ['text' => $text]
         );
     }
 
     public function blocks(array $blocks): void
     {
         $this->sentMessages[] = array_merge(
-            $this->getBaseProperties(), ['blocks' => $blocks]
+            $this->getBaseProperties(),
+            ['blocks' => $blocks]
         );
     }
 
@@ -28,7 +30,8 @@ class FakeSlackAlert extends SlackAlert
         PHPUnit::assertEquals(
             0,
             count($this->sentMessages),
-            'Expected no messages to be sent, but found: ' . json_encode($this->sentMessages));
+            'Expected no messages to be sent, but found: ' . json_encode($this->sentMessages)
+        );
     }
 
     public function expectNumberOfMessagesSent(int $expectedCount): void
@@ -38,20 +41,22 @@ class FakeSlackAlert extends SlackAlert
         PHPUnit::assertEquals(
             $expectedCount,
             count($this->sentMessages),
-            "Expected {$expectedCount} messages to be sent, but {$actualCount} messages: were actually sent");
+            "Expected {$expectedCount} messages to be sent, but {$actualCount} messages: were actually sent"
+        );
     }
 
     public function expectMessagesSent(?Closure $callback = null)
     {
-        $callback = $callback ?: fn() => true;
+        $callback = $callback ?: fn () => true;
 
         $foundMessagesCount = collect($this->sentMessages)
-            ->filter(fn($message) => $callback($message))
+            ->filter(fn ($message) => $callback($message))
             ->count();
 
         $message = is_null($callback)
             ? 'Expected messages to be sent, but none were sent'
-            : 'No messages were sent that matched the expected criteria.';;
+            : 'No messages were sent that matched the expected criteria.';
+        ;
 
         PHPUnit::assertGreaterThanOrEqual(
             1,

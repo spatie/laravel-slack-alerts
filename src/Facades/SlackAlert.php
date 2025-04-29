@@ -28,6 +28,6 @@ class SlackAlert extends Facade
     {
         static::swap(new FakeSlackAlert());
 
-        return new static;
+        return new static();
     }
 }

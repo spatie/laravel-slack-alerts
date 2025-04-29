@@ -18,7 +18,7 @@ it('can get the sent messages', function () {
         'username',
         'icon_emoji',
         'icon_url',
-        'text'
+        'text',
     ]);
     expect($sentMessages[0]['text'])->toBe('hey');
 });
@@ -35,7 +35,7 @@ it('can get the sent blocks', function () {
         'username',
         'icon_emoji',
         'icon_url',
-        'blocks'
+        'blocks',
     ]);
     expect($sentMessages[0]['blocks'])->toBe(['my block']);
 });
@@ -91,7 +91,7 @@ it('will fail when a block was not sent containing a string', function () {
     SlackAlert::expectMessageSentContaining('something else');
 })->fails();
 
-it('will not use the keys of the block when searching the substring', function() {
+it('will not use the keys of the block when searching the substring', function () {
     SlackAlert::blocks(['key' => 'hey there']);
 
     SlackAlert::expectMessageSentContaining('key');
