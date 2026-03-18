@@ -42,6 +42,7 @@ class SlackAlert
     public function sync(bool $sync = true): self
     {
         $this->sync = $sync;
+
         return $this;
     }
 
@@ -83,7 +84,7 @@ class SlackAlert
             $extraProperties,
         );
 
-        if (!Config::isEnabled() || empty($allProperties['webhookUrl'])) {
+        if (! Config::isEnabled() || empty($allProperties['webhookUrl'])) {
             return;
         }
 
@@ -94,6 +95,7 @@ class SlackAlert
             dispatch_sync(
                 $job->onQueue($this->queue())
             );
+
             return;
         }
 
