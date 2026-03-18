@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-slack-alerts` will be documented in this file.
 
+## 1.9.0 - 2026-03-18
+
+Add Laravel 13 support, drop support for Laravel 10 and 11
+
 ## 1.7.2 - 2025-04-29
 
 ### What's Changed
