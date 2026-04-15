@@ -132,6 +132,8 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 SlackAlert::toChannel('subscription_alerts')->message("You have a new subscriber to the {$newsletter->name} newsletter!");
 ```
 
+> **Note**: Slack incoming webhooks created for modern Slack apps do not allow per-message channel overrides. The message will always be delivered to the channel the webhook was installed for, regardless of the value passed to `toChannel`. This method only has an effect on legacy incoming webhooks. See the [Slack documentation](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/) for details. If you need per-channel routing, consider using the Slack Web API (`chat.postMessage` with a bot token) instead.
+
 ## Queuing
 
 By default, messages are sent by dispatching the job to the `default` queue.
@@ -204,6 +206,8 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 SlackAlert::withIconURL('https://example.com/tiny-icon.jpg')->message("Some message.");
 ```
 
+> **Note**: Like the channel override, Slack incoming webhooks for modern Slack apps silently ignore `withIconURL` and `withIconEmoji`. The icon configured on the Slack app will be used instead. See the [Slack documentation](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/) for details.
+
 ### Display Name Change
 
 You can change the Display-Name that appears next to the display-name at the top of the message.
@@ -213,6 +217,8 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 
 SlackAlert::withUsername('More Descriptive Name')->message("Some message.");
 ```
+
+> **Note**: Slack incoming webhooks for modern Slack apps silently ignore `withUsername`. The username configured on the Slack app will be used instead. See the [Slack documentation](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/) for details.
 
 ### Synchronous Dispatch
 
