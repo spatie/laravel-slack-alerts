@@ -11,13 +11,14 @@ use Spatie\SlackAlerts\Jobs\SendToSlackChannelJob;
  * of whether the catch block runs. The $maxExceptions counter, in contrast,
  * only increments inside the catch block.
  *
- * @return array{attempts: int, httpCalls: int, capHit: bool}
+ * @return array{attempts: int, httpCalls: int, capHit: bool, elapsedMs: float}
  */
 function simulateWorkerWithCatchBypass(SendToSlackChannelJob $job, int $safetyCap = 20): array
 {
     $attempts = 0;
     $httpCallsBefore = count(Http::recorded());
     $capHit = false;
+    $startedAt = microtime(true);
 
     while (true) {
         $attempts++;
@@ -49,6 +50,7 @@ function simulateWorkerWithCatchBypass(SendToSlackChannelJob $job, int $safetyCa
         'attempts' => $attempts - 1,
         'httpCalls' => count(Http::recorded()) - $httpCallsBefore,
         'capHit' => $capHit,
+        'elapsedMs' => (microtime(true) - $startedAt) * 1000,
     ];
 }
 
@@ -81,6 +83,13 @@ it('OLD defaults ($tries = 0) would run indefinitely when the catch block is byp
     expect($result['capHit'])->toBeTrue();
     expect($result['attempts'])->toBe(20);
     expect($result['httpCalls'])->toBe(20);
+
+    // Report wall-clock elapsed for the PR body.
+    fwrite(STDERR, sprintf(
+        "\n  [OLD defaults] 20 HTTP calls in %.2f ms (%.0f attempts/sec)\n",
+        $result['elapsedMs'],
+        20 / ($result['elapsedMs'] / 1000),
+    ));
 });
 
 it('NEW defaults ($tries = 3) cap retries at 3 even when the catch block is bypassed', function () {
@@ -97,6 +106,11 @@ it('NEW defaults ($tries = 3) cap retries at 3 even when the catch block is bypa
     expect($result['capHit'])->toBeFalse();
     expect($result['attempts'])->toBe(3);
     expect($result['httpCalls'])->toBe(3);
+
+    fwrite(STDERR, sprintf(
+        "\n  [NEW defaults] 3 HTTP calls in %.2f ms; worker-level \$backoff pads the production timing further\n",
+        $result['elapsedMs'],
+    ));
 });
 
 it('proves the fix reduces HTTP calls to a rotated webhook by a factor of at least 6x per incident', function () {
