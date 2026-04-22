@@ -4,18 +4,28 @@ use Illuminate\Support\Facades\Http;
 use Spatie\SlackAlerts\Jobs\SendToSlackChannelJob;
 
 /**
- * Simulates the queue worker's per-attempt retry check under catch-block bypass
- * (OOM, SIGKILL, process crash). Models the logic in
- * Illuminate\Queue\Worker::markJobAsFailedIfAlreadyExceedsMaxAttempts(): the
- * attempts counter is checked before fire(), so $tries caps attempts regardless
- * of whether the catch block runs. The $maxExceptions counter, in contrast,
- * only increments inside the catch block.
+ * Models Illuminate\Queue\Worker::process(). Two retry guards apply each attempt:
  *
+ *   - Pre-fire check: markJobAsFailedIfAlreadyExceedsMaxAttempts() reads the
+ *     attempts counter from the job payload (incremented on pop by the broker)
+ *     and fails the job if it exceeds $tries. Runs regardless of what happens
+ *     inside handle().
+ *
+ *   - Catch-block check: markJobAsFailedIfWillExceedMaxExceptions() reads an
+ *     exception counter from the cache, increments it, and fails the job if it
+ *     meets $maxExceptions. Runs ONLY if handle()'s exception is caught by the
+ *     worker. Bypassed when the process dies mid-fire (OOM, SIGKILL, fatal PHP
+ *     error).
+ *
+ * @param  bool  $catchRuns  true = worker reaches the catch block (normal op);
+ *                           false = process dies mid-fire (OOM, SIGKILL, crash).
  * @return array{attempts: int, httpCalls: int, capHit: bool, elapsedMs: float}
  */
-function simulateWorkerWithCatchBypass(SendToSlackChannelJob $job, int $safetyCap = 20): array
+function simulateWorker(SendToSlackChannelJob $job, bool $catchRuns, int $safetyCap = 20): array
 {
     $attempts = 0;
+    $handleCalls = 0;
+    $exceptionCount = 0;
     $httpCallsBefore = count(Http::recorded());
     $capHit = false;
     $startedAt = microtime(true);
@@ -23,10 +33,7 @@ function simulateWorkerWithCatchBypass(SendToSlackChannelJob $job, int $safetyCa
     while (true) {
         $attempts++;
 
-        // Worker's pre-fire check: if $tries is set to a positive value,
-        // fail the job once attempts exceeds that value.
-        $maxTries = $job->tries;
-        if ($maxTries > 0 && $attempts > $maxTries) {
+        if ($job->tries > 0 && $attempts > $job->tries) {
             break;
         }
 
@@ -36,22 +43,55 @@ function simulateWorkerWithCatchBypass(SendToSlackChannelJob $job, int $safetyCa
         }
 
         try {
+            $handleCalls++;
             $job->handle();
             break;
         } catch (\Throwable $exception) {
-            // Simulating catch-block bypass: the worker never got here
-            // because OOM killed it. $maxExceptions counter is NOT incremented.
-            // The loop continues on the next worker cycle.
+            if (! $catchRuns) {
+                // Process died before reaching this point. Counter stays put.
+                continue;
+            }
+
+            $exceptionCount++;
+
+            if ($job->maxExceptions > 0 && $exceptionCount >= $job->maxExceptions) {
+                break;
+            }
+
             continue;
         }
     }
 
     return [
-        'attempts' => $attempts - 1,
+        'attempts' => $handleCalls,
         'httpCalls' => count(Http::recorded()) - $httpCallsBefore,
         'capHit' => $capHit,
         'elapsedMs' => (microtime(true) - $startedAt) * 1000,
     ];
+}
+
+/**
+ * Scenario shared by every test below: a Slack admin rotates the webhook
+ * secret. The next dispatch of SendToSlackChannelJob gets a 401 from Slack
+ * and ->throw() raises a RequestException.
+ */
+function makeOldDefaultsJob(): SendToSlackChannelJob
+{
+    return new class(
+        webhookUrl: 'https://hooks.slack.com/services/T/B/rotated',
+        text: 'alert',
+    ) extends SendToSlackChannelJob {
+        public int $tries = 0;           // pre-change: unlimited
+        public int $maxExceptions = 3;   // pre-change: only trips if catch runs
+    };
+}
+
+function makeNewDefaultsJob(): SendToSlackChannelJob
+{
+    return new SendToSlackChannelJob(
+        webhookUrl: 'https://hooks.slack.com/services/T/B/rotated',
+        text: 'alert',
+    );
 }
 
 beforeEach(function () {
@@ -60,78 +100,55 @@ beforeEach(function () {
     ]);
 });
 
-it('OLD defaults ($tries = 0) would run indefinitely when the catch block is bypassed', function () {
-    // Scenario: a Slack admin rotates the webhook secret. The next dispatch
-    // gets a 401 from Slack. Under the OLD design, $maxExceptions = 3 was
-    // supposed to stop the retries after three catchable exceptions. But if
-    // the worker is killed mid-fire (OOM, container restart, SIGKILL) before
-    // the catch block runs, $maxExceptions never increments. $tries = 0 means
-    // unlimited, so the job re-fires indefinitely, hammering Slack's 401.
-    $oldDefaultsJob = new class(
-        webhookUrl: 'https://hooks.slack.com/services/T/B/rotated',
-        text: 'alert',
-    ) extends SendToSlackChannelJob {
-        public int $tries = 0;           // OLD: unlimited
-        public int $maxExceptions = 3;   // OLD: only counts if catch runs
-    };
+it('OLD defaults stop at 3 attempts under normal operation', function () {
+    // Worker is healthy, handle() throws, the catch runs, $maxExceptions
+    // counter increments each attempt. This is the case PR #33 targeted and
+    // it still works. Documented here so the PR does not claim the OLD
+    // design is broken for everyday failures.
+    $result = simulateWorker(makeOldDefaultsJob(), catchRuns: true);
 
-    $result = simulateWorkerWithCatchBypass($oldDefaultsJob, safetyCap: 20);
+    expect($result['attempts'])->toBe(3);
+    expect($result['httpCalls'])->toBe(3);
+    expect($result['capHit'])->toBeFalse();
 
-    // Safety cap of 20 fires. In production, with no safety cap, the loop
-    // continues until the broker's retention window closes (hours to days)
-    // or an operator intervenes.
+    fwrite(STDERR, "\n  [OLD defaults, catch runs]     3 HTTP calls, bounded\n");
+});
+
+it('OLD defaults are unbounded when the catch block is bypassed', function () {
+    // Process dies mid-fire (OOM, SIGKILL, container restart, fatal PHP
+    // error). The $maxExceptions counter is incremented inside the catch
+    // block, so when the catch does not run the counter stays at zero.
+    // $tries = 0 means "unlimited", so there is no other ceiling.
+    $result = simulateWorker(makeOldDefaultsJob(), catchRuns: false);
+
     expect($result['capHit'])->toBeTrue();
     expect($result['attempts'])->toBe(20);
     expect($result['httpCalls'])->toBe(20);
 
-    // Report wall-clock elapsed for the PR body.
     fwrite(STDERR, sprintf(
-        "\n  [OLD defaults] 20 HTTP calls in %.2f ms (%.0f attempts/sec)\n",
-        $result['elapsedMs'],
-        20 / ($result['elapsedMs'] / 1000),
+        "  [OLD defaults, catch bypassed] %d HTTP calls (hit test safety cap; production has no cap)\n",
+        $result['attempts'],
     ));
 });
 
-it('NEW defaults ($tries = 3) cap retries at 3 even when the catch block is bypassed', function () {
-    // Same scenario: rotated webhook, 401 response. NEW defaults use $tries
-    // as the gate, which is checked on pop (outside the catch block). No
-    // matter whether the worker's catch runs, the job fails after 3 attempts.
-    $newDefaultsJob = new SendToSlackChannelJob(
-        webhookUrl: 'https://hooks.slack.com/services/T/B/rotated',
-        text: 'alert',
-    );
+it('NEW defaults stop at 3 attempts under normal operation', function () {
+    $result = simulateWorker(makeNewDefaultsJob(), catchRuns: true);
 
-    $result = simulateWorkerWithCatchBypass($newDefaultsJob, safetyCap: 20);
+    expect($result['attempts'])->toBe(3);
+    expect($result['httpCalls'])->toBe(3);
+
+    fwrite(STDERR, "  [NEW defaults, catch runs]     3 HTTP calls, bounded\n");
+});
+
+it('NEW defaults stop at 3 attempts when the catch block is bypassed', function () {
+    // $tries is checked by Worker::markJobAsFailedIfAlreadyExceedsMaxAttempts()
+    // on pop, before fire(). That check runs whether or not the worker's
+    // catch block is reached. So the 3-attempt cap holds for both paths.
+    $result = simulateWorker(makeNewDefaultsJob(), catchRuns: false);
 
     expect($result['capHit'])->toBeFalse();
     expect($result['attempts'])->toBe(3);
     expect($result['httpCalls'])->toBe(3);
 
-    fwrite(STDERR, sprintf(
-        "\n  [NEW defaults] 3 HTTP calls in %.2f ms; worker-level \$backoff pads the production timing further\n",
-        $result['elapsedMs'],
-    ));
-});
-
-it('proves the fix reduces HTTP calls to a rotated webhook by a factor of at least 6x per incident', function () {
-    $oldJob = new class(
-        webhookUrl: 'https://hooks.slack.com/services/T/B/rotated',
-        text: 'alert',
-    ) extends SendToSlackChannelJob {
-        public int $tries = 0;
-        public int $maxExceptions = 3;
-    };
-
-    $newJob = new SendToSlackChannelJob(
-        webhookUrl: 'https://hooks.slack.com/services/T/B/rotated',
-        text: 'alert',
-    );
-
-    $oldResult = simulateWorkerWithCatchBypass($oldJob, safetyCap: 20);
-    $newResult = simulateWorkerWithCatchBypass($newJob, safetyCap: 20);
-
-    // OLD: 20 calls (hit safety cap). NEW: 3 calls. Real-world ratio is worse:
-    // the safety cap of 20 is arbitrary; with no cap the OLD path runs until
-    // broker retention expires, which for SQS is up to 14 days at default rates.
-    expect($oldResult['httpCalls'] / $newResult['httpCalls'])->toBeGreaterThanOrEqual(6);
+    fwrite(STDERR, "  [NEW defaults, catch bypassed] 3 HTTP calls, bounded\n\n");
 });
