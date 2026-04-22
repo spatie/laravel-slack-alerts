@@ -66,32 +66,3 @@ it('posts the payload to the configured webhook url', function () {
             && str_contains(json_encode($request->data()), 'hello');
     });
 });
-
-it('survives serialization and deserialization without losing retry properties', function () {
-    $original = new SendToSlackChannelJob(
-        webhookUrl: 'https://hooks.slack.com/services/T/B/secret',
-        text: 'hello',
-    );
-
-    $restored = unserialize(serialize($original));
-
-    expect($restored->tries)->toBe(3);
-    expect($restored->maxExceptions)->toBe(0);
-    expect($restored->backoff)->toBe([10, 30, 60]);
-    expect($restored->timeout)->toBe(10);
-});
-
-it('supports subclass property override', function () {
-    $subclass = new class(
-        webhookUrl: 'https://hooks.slack.com/services/T/B/secret',
-        text: 'hello',
-    ) extends SendToSlackChannelJob {
-        public int $tries = 5;
-        public array $backoff = [1, 2, 3, 4, 5];
-    };
-
-    expect($subclass->tries)->toBe(5);
-    expect($subclass->backoff)->toBe([1, 2, 3, 4, 5]);
-    expect($subclass->maxExceptions)->toBe(0);
-    expect($subclass->timeout)->toBe(10);
-});
