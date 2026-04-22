@@ -8,6 +8,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class SendToSlackChannelJob implements ShouldQueue
 {
@@ -16,12 +18,20 @@ class SendToSlackChannelJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public int $tries = 0;
+    public int $tries = 3;
 
     /**
-     * The maximum number of unhandled exceptions to allow before failing.
+     * Counter-based exception limit is intentionally disabled because the
+     * worker increments it inside the catch block; if the process dies before
+     * that point (OOM, SIGKILL) the counter stays at zero and never trips.
+     * $tries guards total attempts, $backoff paces retries.
      */
-    public int $maxExceptions = 3;
+    public int $maxExceptions = 0;
+
+    /** @var array<int, int> seconds between retries */
+    public array $backoff = [10, 30, 60];
+
+    public int $timeout = 10;
 
     public function __construct(
         public string $webhookUrl,
@@ -56,6 +66,14 @@ class SendToSlackChannelJob implements ShouldQueue
             $payload['username'] = $this->username;
         }
 
-        Http::post($this->webhookUrl, $payload)->throw();
+        Http::timeout($this->timeout)->post($this->webhookUrl, $payload)->throw();
+    }
+
+    public function failed(Throwable $exception): void
+    {
+        Log::error(static::class . ' permanently failed', [
+            'payload_type' => $this->text !== null ? 'text' : 'blocks',
+            'exception' => $exception->getMessage(),
+        ]);
     }
 }
